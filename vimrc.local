@@ -1,0 +1,7 @@
+set nocursorline
+
+" keyboard shortcuts
+inoremap jj <ESC>
+
+" highlight search
+set hlsearch

@@ -1,0 +1,23 @@
+" Plugins here are part of the CORE Maximum Awesome setup
+" Do NOT add bundles to this list, as they might get removed when you upgrade
+" Maximum Awesome.
+" Please create ~/.vimrc.bundles.local and add any extra bundles you want there
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'majutsushi/tagbar'
+Plugin 'rking/ag.vim'
+Plugin 'garbas/vim-snipmate'
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'tomtom/tlib_vim'
+Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/syntastic'
+Plugin 'slim-template/vim-slim'
+Plugin 'tpope/vim-commentary'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-pastie'
+Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-unimpaired'
