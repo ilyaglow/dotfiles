@@ -1,3 +1,7 @@
+#
+# vim: ai ts=2 sts=2 et sw=2 ft=ruby
+#
+
 def install_github_bundle(user, package)
   unless File.exist? File.expand_path("~/.vim/bundle/#{package}")
     sh "git clone https://github.com/#{user}/#{package} ~/.vim/bundle/#{package}"
@@ -71,29 +75,100 @@ def unlink_file(original_filename, symlink_filename)
   end
 end
 
+def get_distributor
+  id = case `lsb_release -i`
+    when /Arch/
+      :arch
+    when /Ubuntu|Debian/
+      :deb
+  end
+end
+
+def repo_update(distrib)
+  case distrib
+  when :deb
+    sh 'sudo apt-get update'
+  when :arch
+    sh 'sudo pacman -Syu --noconfirm'
+  end
+end
+
+def install_package(distrib, package)
+  prefix = case distrib
+           when :deb
+             'sudo apt-get install -y'
+           when :arch
+             'sudo pacman -S --noconfirm'
+           end
+
+  package = 
+    case package
+
+    when 'vim'
+      case distrib
+      when :deb
+        'vim-gtk'
+      when :arch
+        'gvim'
+      else
+        'gvim'
+      end 
+
+    when 'the_silver_searcher'
+      case distrib
+      when :deb
+        'silversearcher-ag'
+      when :arch
+        'the_silver_searcher'
+      else
+        'the_silver_searcher'
+      end
+
+    else
+      package
+    end
+
+  command = "#{prefix} #{package}"
+  sh command
+end
+
 namespace :install do
+  distrib = get_distributor
+
   desc 'Repository Update'
   task :update do
-    step 'apt-get update'
-    sh 'sudo apt-get update'
+    step 'repos update'
+    repo_update(distrib)
   end
 
   desc 'Install vim-gtk'
   task :vim do
     step 'vim'
-    sh 'sudo apt-get install -y vim-gtk'
+    install_package(distrib, 'vim')
   end
 
   desc 'Install tmux'
   task :tmux do
     step 'tmux'
-    sh 'sudo apt-get install -y tmux'
+    install_package(distrib, 'tmux')
   end
 
   desc 'Install xclip'
   task :xclip do
     step 'xclip'
-    sh 'sudo apt-get install -y xclip'
+    install_package(distrib, 'xclip')
+  end
+
+  desc 'Install ctags'
+  task :ctags do
+    step 'ctags'
+    install_package(distrib, 'ctags')
+  end
+
+  desc 'Install The Silver Searcher'
+  task :the_silver_searcher do
+    step 'the_silver_searcher'
+    install_package(distrib, 'the_silver_searcher')
   end
 
   desc 'Install Vundle'
@@ -101,25 +176,6 @@ namespace :install do
     step 'vundle'
     install_github_bundle 'VundleVim','Vundle.vim'
     sh 'vim -c "PluginInstall!" -c "q" -c "q"'
-  end
-
-  desc 'Install ctags'
-  task :ctags do
-    step 'ctags'
-    sh 'sudo apt-get install -y ctags'
-  end
-
-  # https://github.com/ggreer/the_silver_searcher
-  desc 'Install The Silver Searcher'
-  task :the_silver_searcher do
-    step 'the_silver_searcher'
-    sh 'sudo apt-get install -y build-essential automake pkg-config libpcre3-dev zlib1g-dev liblzma-dev'
-    sh 'git clone https://github.com/ggreer/the_silver_searcher.git'
-    Dir.chdir 'the_silver_searcher' do
-      sh './build.sh'
-      sh 'sudo make install'
-    end
-    sh 'rm -rf the_silver_searcher'
   end
 
 end
