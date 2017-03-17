@@ -79,7 +79,7 @@ def get_distributor
   id = case `lsb_release -i`
     when /Arch/
       :arch
-    when /Ubuntu|Debian/
+    when /Ubuntu|Debian|Kali/
       :deb
   end
 end
@@ -122,6 +122,14 @@ def install_package(distrib, package)
         'the_silver_searcher'
       else
         'the_silver_searcher'
+      end
+
+    when 'ctags'
+      case distrib
+      when :deb
+        'exuberant-ctags'
+      else
+        'ctags'
       end
 
     else
