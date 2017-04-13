@@ -45,6 +45,8 @@ set tabstop=8                                                " actual tabs occup
 set wildignore=log/**,node_modules/**,target/**,tmp/**,*.rbc
 set wildmenu                                                 " show a navigable menu for tab completion
 set wildmode=longest,list,full
+set nocursorline
+set hlsearch
 
 " plugin settings
 let g:ctrlp_match_window = 'order:ttb,max:20'
@@ -94,6 +96,7 @@ nnoremap <leader>] :TagbarToggle<CR>
 nnoremap <leader><space> :call whitespace#strip_trailing()<CR>
 nnoremap <leader>g :GitGutterToggle<CR>
 noremap <silent> <leader>V :source ~/.vimrc<CR>:filetype detect<CR>:exe ":echo 'vimrc reloaded'"<CR>
+inoremap jj <ESC>
 
 " in case you forgot to sudo
 cnoremap w!! %!sudo tee > /dev/null %
