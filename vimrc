@@ -13,7 +13,6 @@ call vundle#begin()
 " install Vundle bundles
 if filereadable(expand("~/.vimrc.bundles"))
   source ~/.vimrc.bundles
-  source ~/.vimrc.bundles.local
 endif
 
 call vundle#end()
@@ -73,11 +72,6 @@ autocmd VimResized * :wincmd =
 
 " Don't copy the contents of an overwritten selection.
 vnoremap p "_dP
-
-" Go crazy!
-if filereadable(expand("~/.vimrc.local"))
-  source ~/.vimrc.local
-endif
 
 " Shortcuts
 let mapleader = ','

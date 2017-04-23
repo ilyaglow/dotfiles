@@ -195,12 +195,6 @@ def filemap(map)
   end.freeze
 end
 
-COPIED_FILES = filemap(
-  'vimrc.local'         => '~/.vimrc.local',
-  'vimrc.bundles.local' => '~/.vimrc.bundles.local',
-  'tmux.conf.local'     => '~/.tmux.conf.local'
-)
-
 LINKED_FILES = filemap(
   'vim'           => '~/.vim',
   'tmux.conf'     => '~/.tmux.conf',
@@ -223,10 +217,6 @@ task :install do
     link_file orig, link
   end
 
-  COPIED_FILES.each do |orig, copy|
-    cp orig, copy, :verbose => true unless File.exist?(copy)
-  end
-
   # Install Vundle and bundles
   Rake::Task['install:vundle'].invoke
 
@@ -240,12 +230,6 @@ task :uninstall do
   LINKED_FILES.each do |orig, link|
     unlink_file orig, link
   end
-
-  # delete unchanged copied files
-  COPIED_FILES.each do |orig, copy|
-    rm_f copy, :verbose => true if File.read(orig) == File.read(copy)
-  end
-
 end
 
 task :default => :install
