@@ -81,6 +81,8 @@ def get_distributor
       :arch
     when /Ubuntu|Debian|Kali/
       :deb
+    when /CentOS/
+      :rpm
   end
 end
 
@@ -90,6 +92,8 @@ def repo_update(distrib)
     sh 'sudo apt-get update'
   when :arch
     sh 'sudo pacman -Syu --noconfirm'
+  when :rpm
+    sh 'sudo yum update'
   end
 end
 
@@ -99,6 +103,8 @@ def install_package(distrib, package)
              'sudo apt-get install -y'
            when :arch
              'sudo pacman -S --noconfirm'
+           when :rpm
+             'sudo yum install -y'
            end
 
   package = 
@@ -110,6 +116,8 @@ def install_package(distrib, package)
         'vim-gtk'
       when :arch
         'gvim'
+      when :rpm
+        'vim-X11'
       else
         'gvim'
       end 
