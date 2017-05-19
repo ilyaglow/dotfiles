@@ -32,7 +32,7 @@ set ignorecase                                               " case-insensitive 
 set incsearch                                                " search as you type
 set laststatus=2                                             " always show statusline
 set list                                                     " show trailing whitespace
-set listchars=tab:▸\ ,trail:▫
+set listchars=tab:▸\ ,trail:·,precedes:←,extends:→
 set number                                                   " show line numbers
 set ruler                                                    " show where you are
 set scrolloff=3                                              " show context above/below cursorline
@@ -46,6 +46,9 @@ set wildmenu                                                 " show a navigable 
 set wildmode=longest,list,full
 set nocursorline
 set hlsearch
+
+" gvim settings
+set guifont=Monospace\ 11
 
 " plugin settings
 let g:ctrlp_match_window = 'order:ttb,max:20'
