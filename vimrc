@@ -73,6 +73,9 @@ autocmd BufRead,BufNewFile *.md set spell
 " automatically rebalance windows on vim resize
 autocmd VimResized * :wincmd =
 
+" limit commit message to 72 characters
+autocmd Filetype gitcommit setlocal spell textwidth=72
+
 " Don't copy the contents of an overwritten selection.
 vnoremap p "_dP
 
