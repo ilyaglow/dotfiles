@@ -46,6 +46,7 @@ set wildmenu                                                 " show a navigable 
 set wildmode=longest,list,full
 set nocursorline
 set hlsearch
+set tabpagemax=100
 
 " gvim settings
 set guifont=Monospace\ 11
