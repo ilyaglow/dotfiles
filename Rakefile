@@ -190,7 +190,7 @@ namespace :install do
   desc 'Install Plug'
   task :plug do
     step 'plug'
-    install_github_autoload 'junegunn','plug.vim'
+    install_github_autoload 'junegunn','vim-plug.vim'
     sh 'vim -c "PlugInstall" -c "q" -c "q"'
   end
 
