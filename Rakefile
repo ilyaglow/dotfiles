@@ -2,12 +2,6 @@
 # vim: ai ts=2 sts=2 et sw=2 ft=ruby
 #
 
-def install_github_autoload(user, package)
-  unless File.exist? File.expand_path("~/.vim/autoload/#{package}")
-    sh "git clone https://github.com/#{user}/#{package} ~/.vim/autoload/#{package}"
-  end
-end
-
 def step(description)
   description = "-- #{description} "
   description = description.ljust(80, '-')
@@ -190,7 +184,7 @@ namespace :install do
   desc 'Install Plug'
   task :plug do
     step 'plug'
-    install_github_autoload 'junegunn','vim-plug.vim'
+    sh 'curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
     sh 'vim -c "PlugInstall" -c "q" -c "q"'
   end
 
