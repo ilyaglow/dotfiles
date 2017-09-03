@@ -4,21 +4,10 @@ set nocompatible
 " enable syntax highlighting
 syntax enable
 
-" configure Vundle
-filetype on " without this vim emits a zero exit status, later, because of :ft off
-filetype off
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-
-" install Vundle bundles
-if filereadable(expand("~/.vimrc.bundles"))
-  source ~/.vimrc.bundles
+" install Plug bundles
+if filereadable(expand("~/.vimrc.plugs"))
+  source ~/.vimrc.plugs
 endif
-
-call vundle#end()
-
-" ensure ftdetect et al work by including this after the Vundle stuff
-filetype plugin indent on
 
 set autoindent
 set autoread                                                 " reload files when changed on disk, i.e. via `git checkout`
@@ -47,12 +36,21 @@ set wildmode=longest,list,full
 set nocursorline
 set hlsearch
 set tabpagemax=100
+set nohidden
+set ttyfast
+set secure
+set visualbell
+set showmatch
+
+filetype plugin indent on
 
 " gvim settings
 set guifont=Monospace\ 11
 
 " plugin settings
 let g:ctrlp_match_window = 'order:ttb,max:20'
+let g:ctrlp_lazy_update = 1
+let g:ctrlp_show_hidden = 1
 let g:NERDSpaceDelims=1
 let g:gitgutter_enabled = 0
 
@@ -62,7 +60,8 @@ if executable('ag')
   set grepprg=ag\ --nogroup\ --nocolor
 
   " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g "" --hidden --ignore "\.git$\|\.hg$\|\.svn|\.pyc$"'
+  let g:ctrlp_use_caching = 0
 endif
 
 " fdoc is yaml
@@ -96,6 +95,8 @@ nnoremap <leader>T :CtrlPClearCache<CR>:CtrlP<CR>
 nnoremap <leader>] :TagbarToggle<CR>
 nnoremap <leader><space> :call whitespace#strip_trailing()<CR>
 nnoremap <leader>g :GitGutterToggle<CR>
+nnoremap <leader>. :cd %:p:h<CR>:pwd<CR
+nnoremap <leader>c :GoDoc<CR>
 noremap <silent> <leader>V :source ~/.vimrc<CR>:filetype detect<CR>:exe ":echo 'vimrc reloaded'"<CR>
 inoremap jj <ESC>
 

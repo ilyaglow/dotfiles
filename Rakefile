@@ -2,9 +2,9 @@
 # vim: ai ts=2 sts=2 et sw=2 ft=ruby
 #
 
-def install_github_bundle(user, package)
-  unless File.exist? File.expand_path("~/.vim/bundle/#{package}")
-    sh "git clone https://github.com/#{user}/#{package} ~/.vim/bundle/#{package}"
+def install_github_autoload(user, package)
+  unless File.exist? File.expand_path("~/.vim/autoload/#{package}")
+    sh "git clone https://github.com/#{user}/#{package} ~/.vim/autoload/#{package}"
   end
 end
 
@@ -187,11 +187,11 @@ namespace :install do
     install_package(distrib, 'the_silver_searcher')
   end
 
-  desc 'Install Vundle'
-  task :vundle do
-    step 'vundle'
-    install_github_bundle 'VundleVim','Vundle.vim'
-    sh 'vim -c "PluginInstall!" -c "q" -c "q"'
+  desc 'Install Plug'
+  task :plug do
+    step 'plug'
+    install_github_autoload 'junegunn','plug.vim'
+    sh 'vim -c "PlugInstall" -c "q" -c "q"'
   end
 
 end
@@ -207,7 +207,7 @@ LINKED_FILES = filemap(
   'vim'           => '~/.vim',
   'tmux.conf'     => '~/.tmux.conf',
   'vimrc'         => '~/.vimrc',
-  'vimrc.bundles' => '~/.vimrc.bundles'
+  'vimrc.plugs' => '~/.vimrc.plugs'
 )
 
 desc 'Install these config files.'
@@ -225,8 +225,8 @@ task :install do
     link_file orig, link
   end
 
-  # Install Vundle and bundles
-  Rake::Task['install:vundle'].invoke
+  # Install Plug and plugs
+  Rake::Task['install:plug'].invoke
 
 end
 

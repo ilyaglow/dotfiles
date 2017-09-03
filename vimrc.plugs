@@ -1,0 +1,44 @@
+" Install vim-plug if we don't already have it
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+call plug#begin('~/.vim/plugged')
+
+Plug 'VundleVim/Vundle.vim'
+Plug 'airblade/vim-gitgutter'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'majutsushi/tagbar'
+Plug 'rking/ag.vim'
+Plug 'garbas/vim-snipmate'
+Plug 'MarcWeber/vim-addon-mw-utils'
+Plug 'tomtom/tlib_vim'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/syntastic'
+Plug 'slim-template/vim-slim'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-pastie'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-unimpaired'
+Plug 'dhruvasagar/vim-table-mode'
+
+Plug 'davidhalter/jedi-vim', { 'for': 'python' }
+Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries', 'for': 'go' }
+
+if executable("curl")
+
+    " Webapi: Dependency of Gist-vim
+    Plug 'mattn/webapi-vim'
+
+    " Gist: Post text to gist.github
+    Plug 'mattn/gist-vim'
+endif
+
+filetype plugin indent on                   " required!
+call plug#end()
