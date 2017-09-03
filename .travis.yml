@@ -1,6 +1,6 @@
 before_script:
   - sudo apt-get -qq update
-  - sudo apt-get install -y rake git
+  - sudo apt-get install -y rake
 
 script:
   - rake
