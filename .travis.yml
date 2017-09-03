@@ -1,0 +1,6 @@
+before_script:
+  - sudo apt-get -qq update
+  - sudo apt-get install -y rake git lsb-release
+
+script:
+  - rake
