@@ -53,6 +53,7 @@ let g:ctrlp_lazy_update = 1
 let g:ctrlp_show_hidden = 1
 let g:NERDSpaceDelims=1
 let g:gitgutter_enabled = 0
+let g:go_fmt_command = "goimports"
 
 " Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
 if executable('ag')
