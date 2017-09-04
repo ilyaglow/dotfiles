@@ -54,6 +54,8 @@ let g:ctrlp_show_hidden = 1
 let g:NERDSpaceDelims=1
 let g:gitgutter_enabled = 0
 let g:go_fmt_command = "goimports"
+let g:go_metalinter_autosave = 1
+let g:syntastic_go_checkers = ["go"]
 
 " Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
 if executable('ag')
