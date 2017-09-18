@@ -12,7 +12,7 @@ endif
 set autoindent
 set autoread                                                 " reload files when changed on disk, i.e. via `git checkout`
 set backspace=2                                              " Fix broken backspace in some setups
-set backupcopy=yes                                           " see :help crontab
+set backupcopy=yes
 set clipboard=unnamedplus                                    " yank and paste with the system clipboard
 set directory-=.                                             " don't store swapfiles in the current directory
 set encoding=utf-8
@@ -25,10 +25,10 @@ set listchars=tab:▸\ ,trail:·,precedes:←,extends:→
 set number                                                   " show line numbers
 set ruler                                                    " show where you are
 set scrolloff=3                                              " show context above/below cursorline
-set shiftwidth=2                                             " normal mode indentation commands use 2 spaces
+set shiftwidth=4                                             " normal mode indentation commands use 2 spaces
 set showcmd
 set smartcase                                                " case-sensitive search if any caps
-set softtabstop=2                                            " insert mode tab and backspace use 2 spaces
+set softtabstop=4                                            " insert mode tab and backspace use 2 spaces
 set tabstop=4                                                " actual tabs occupy 4 characters
 set wildignore=log/**,node_modules/**,target/**,tmp/**,*.rbc
 set wildmenu                                                 " show a navigable menu for tab completion
@@ -39,7 +39,6 @@ set tabpagemax=100
 set nohidden
 set ttyfast
 set secure
-set visualbell
 set showmatch
 
 filetype plugin indent on
