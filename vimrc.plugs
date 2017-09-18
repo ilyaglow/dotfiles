@@ -7,16 +7,9 @@ endif
 
 call plug#begin('~/.vim/plugged')
 
-Plug 'VundleVim/Vundle.vim'
 Plug 'airblade/vim-gitgutter'
-Plug 'christoomey/vim-tmux-navigator'
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'majutsushi/tagbar'
 Plug 'rking/ag.vim'
-Plug 'garbas/vim-snipmate'
-Plug 'MarcWeber/vim-addon-mw-utils'
-Plug 'tomtom/tlib_vim'
-Plug 'nathanaelkane/vim-indent-guides'
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/syntastic'
 Plug 'slim-template/vim-slim'
