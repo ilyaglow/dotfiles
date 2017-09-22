@@ -40,6 +40,8 @@ set nohidden
 set ttyfast
 set secure
 set showmatch
+set t_Co=256
+colorscheme seoul256
 
 filetype plugin indent on
 
@@ -97,8 +99,11 @@ nnoremap <leader>T :CtrlPClearCache<CR>:CtrlP<CR>
 nnoremap <leader>] :TagbarToggle<CR>
 nnoremap <leader><space> :call whitespace#strip_trailing()<CR>
 nnoremap <leader>g :GitGutterToggle<CR>
-nnoremap <leader>. :cd %:p:h<CR>:pwd<CR
+nnoremap <leader>. :cd %:p:h<CR>:pwd<CR>
 nnoremap <leader>c :GoDoc<CR>
+nnoremap <leader>G :Goyo<CR>
+autocmd! User GoyoEnter Limelight
+autocmd! User GoyoLeave Limelight!
 noremap <silent> <leader>V :source ~/.vimrc<CR>:filetype detect<CR>:exe ":echo 'vimrc reloaded'"<CR>
 inoremap jj <ESC>
 
