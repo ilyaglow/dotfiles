@@ -41,7 +41,7 @@ set ttyfast
 set secure
 set showmatch
 set t_Co=256
-colorscheme seoul256
+silent! colorscheme seoul256
 
 filetype plugin indent on
 
