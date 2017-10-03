@@ -47,6 +47,8 @@ filetype plugin indent on
 
 " gvim settings
 set guifont=Monospace\ 11
+set guioptions-=m
+set guioptions-=T
 
 " plugin settings
 let g:ctrlp_match_window = 'order:ttb,max:20'
@@ -102,6 +104,7 @@ nnoremap <leader>g :GitGutterToggle<CR>
 nnoremap <leader>. :cd %:p:h<CR>:pwd<CR>
 nnoremap <leader>c :GoDoc<CR>
 nnoremap <leader>G :Goyo<CR>
+nnoremap <leader>J :%!python -c "import json, sys, collections; print json.dumps(json.load(sys.stdin, object_pairs_hook=collections.OrderedDict), indent=4)"<CR>
 autocmd! User GoyoEnter Limelight
 autocmd! User GoyoLeave Limelight!
 noremap <silent> <leader>V :source ~/.vimrc<CR>:filetype detect<CR>:exe ":echo 'vimrc reloaded'"<CR>
