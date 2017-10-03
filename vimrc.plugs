@@ -19,6 +19,7 @@ Plug 'tpope/vim-pastie'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
+Plug 'tell-k/vim-autopep8'
 
 " Writing
 " -------
