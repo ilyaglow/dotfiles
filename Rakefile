@@ -30,7 +30,7 @@ def link_file(original_filename, symlink_filename)
   symlink_path = File.expand_path(symlink_filename)
   symlink_dir = File.dirname(symlink_path)
 
-  if not File.directory?(symlink_dir)
+  unless File.directory?(symlink_dir)
     mkdir_p symlink_dir
   end
 
