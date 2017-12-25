@@ -88,7 +88,7 @@ def get_distributor
       :deb
     when /Ubuntu/
       :ubuntu
-    when /CentOS/
+    when /CentOS|RedHat/
       :rpm
   end
 end
@@ -171,7 +171,7 @@ def install_neovim(distrib)
       'sudo pacman -S --noconfirm neovim'
     when :rpm
       'sudo yum -y install epel-release \
-        && curl -o /etc/yum.repos.d/dperson-neovim-epel-7.repo https://copr.fedorainfracloud.org/coprs/dperson/neovim/repo/epel-7/dperson-neovim-epel-7.repo \
+        && sudo curl -o /etc/yum.repos.d/dperson-neovim-epel-7.repo https://copr.fedorainfracloud.org/coprs/dperson/neovim/repo/epel-7/dperson-neovim-epel-7.repo \
         && yum -y install neovim'
   end
 
