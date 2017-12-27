@@ -48,13 +48,13 @@ ysiw"
 
 ### unimpaired
 
-urlencode/urldecode selected text
+Do urlencode/urldecode selected text
 ```
 [u
 ]u
 ```
 
-add new line before/after cursor
+Add new line before/after cursor
 ```
 [<Space>
 ]<Space>
@@ -70,4 +70,12 @@ gcc
 Toggle comments on visual selected lines
 ```
 gc
+```
+
+### gitgutter
+
+Jump to next/previous change
+```
+[c
+]c
 ```
