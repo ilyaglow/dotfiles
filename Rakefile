@@ -254,6 +254,8 @@ desc 'Install these config files.'
 task :install do
   Rake::Task['install:update'].invoke
   Rake::Task['install:vim'].invoke
+  Rake::Task['install:curl'].invoke
+  Rake::Task['install:git'].invoke
   Rake::Task['install:neovim'].invoke
   Rake::Task['install:tmux'].invoke
   Rake::Task['install:xclip'].invoke
