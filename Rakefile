@@ -189,6 +189,18 @@ namespace :install do
     repo_update(distrib)
   end
 
+  desc 'Install curl'
+  task :curl do
+    step 'curl'
+    install_package(distrib, 'curl')
+  end
+
+  desc 'Install git'
+  task :git do
+    step 'git'
+    install_package(distrib, 'git')
+  end
+
   desc 'Install vim-gtk'
   task :vim do
     step 'vim'
