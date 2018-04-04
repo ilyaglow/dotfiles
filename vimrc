@@ -55,10 +55,11 @@ let g:ctrlp_match_window = 'order:ttb,max:20'
 let g:ctrlp_lazy_update = 1
 let g:ctrlp_show_hidden = 1
 let g:NERDSpaceDelims=1
-let g:gitgutter_enabled = 0
+let g:gitgutter_enabled = 1
+let g:gitgutter_grep = 'grep'
 let g:go_fmt_command = "goimports"
+let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
 let g:go_metalinter_autosave = 1
-let g:syntastic_go_checkers = ["go"]
 
 " Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
 if executable('ag')
@@ -72,6 +73,7 @@ endif
 
 " fdoc is yaml
 autocmd BufRead,BufNewFile *.fdoc set filetype=yaml
+autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 " md is markdown
 autocmd BufRead,BufNewFile *.md set filetype=markdown
 autocmd BufRead,BufNewFile *.md set spell
@@ -81,6 +83,9 @@ autocmd VimResized * :wincmd =
 
 " limit commit message to 72 characters
 autocmd Filetype gitcommit setlocal spell textwidth=72
+
+" run :GoBuild
+autocmd FileType go nmap <leader>b  <Plug>(go-build)
 
 " Don't copy the contents of an overwritten selection.
 vnoremap p "_dP
@@ -106,6 +111,11 @@ autocmd! User GoyoEnter Limelight
 autocmd! User GoyoLeave Limelight!
 noremap <silent> <leader>V :source ~/.vimrc<CR>:filetype detect<CR>:exe ":echo 'vimrc reloaded'"<CR>
 inoremap jj <ESC>
+
+" vim-go shortcuts
+map <C-n> :cnext<CR>
+map <C-m> :cprevious<CR>
+nnoremap <leader>a :cclose<CR>
 
 " in case you forgot to sudo
 cnoremap w!! %!sudo tee > /dev/null %
