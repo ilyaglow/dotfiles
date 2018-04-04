@@ -31,6 +31,10 @@ Plug 'flazz/vim-colorschemes'
 Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries', 'for': 'go' }
 
+" Snippets
+" --------
+Plug 'SirVer/ultisnips'
+
 if executable("curl")
 
     " Webapi: Dependency of Gist-vim
