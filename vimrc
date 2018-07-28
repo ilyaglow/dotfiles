@@ -41,6 +41,7 @@ set ttyfast
 set secure
 set showmatch
 set t_Co=256
+set colorcolumn=80
 silent! colorscheme seoul256
 
 filetype plugin indent on
@@ -84,9 +85,6 @@ autocmd VimResized * :wincmd =
 " limit commit message to 72 characters
 autocmd Filetype gitcommit setlocal spell textwidth=72
 
-" run :GoBuild
-autocmd FileType go nmap <leader>b  <Plug>(go-build)
-
 " Don't copy the contents of an overwritten selection.
 vnoremap p "_dP
 
@@ -104,8 +102,13 @@ nnoremap <leader>] :TagbarToggle<CR>
 nnoremap <leader><space> :call whitespace#strip_trailing()<CR>
 nnoremap <leader>g :GitGutterToggle<CR>
 nnoremap <leader>. :cd %:p:h<CR>:pwd<CR>
+
+" vim-go specific
 nnoremap <leader>c :GoDoc<CR>
 nnoremap <leader>G :Goyo<CR>
+autocmd FileType go nmap <silent> <Leader>d <Plug>(go-def-tab)
+autocmd FileType go nmap <leader>b  <Plug>(go-build)
+
 nnoremap <leader>J :%!python -c "import json, sys, collections; print json.dumps(json.load(sys.stdin, object_pairs_hook=collections.OrderedDict), indent=4)"<CR>
 autocmd! User GoyoEnter Limelight
 autocmd! User GoyoLeave Limelight!
