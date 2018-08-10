@@ -1,6 +1,37 @@
 #
 # vim: ai ts=2 sts=2 et sw=2 ft=ruby
 #
+ENV['HOMEBREW_CASK_OPTS'] = "--appdir=/Applications"
+
+def brew_install(package, *args)
+  versions = `brew list #{package} --versions`
+  options = args.last.is_a?(Hash) ? args.pop : {}
+
+  # if brew exits with error we install tmux
+  if versions.empty?
+    sh "brew install #{package} #{args.join ' '}"
+  elsif options[:requires]
+    # brew did not error out, verify tmux is greater than 1.8
+    # e.g. brew_tmux_query = 'tmux 1.9a'
+    installed_version = versions.split(/\n/).first.split(' ').last
+    unless version_match?(options[:requires], installed_version)
+      sh "brew upgrade #{package} #{args.join ' '}"
+    end
+  end
+end
+
+def app_path(name)
+  path = "/Applications/#{name}.app"
+  ["~#{path}", path].each do |full_path|
+    return full_path if File.directory?(full_path)
+  end
+
+  return nil
+end
+
+def app?(name)
+  return !app_path(name).nil?
+end
 
 def step(description)
   description = "-- #{description} "
@@ -81,16 +112,33 @@ def unlink_file(original_filename, symlink_filename)
 end
 
 def get_distributor
-  case `lsb_release -i`
-    when /Arch/
-      :arch
-    when /Debian|Kali/
-      :deb
-    when /Ubuntu/
-      :ubuntu
-    when /CentOS|RedHat/
-      :rpm
+  begin
+    lsb_release=`lsb_release -i`
+  rescue Errno::ENOENT
+    print "Non lsb_release compatible system"
+    lsb_release=nil
   end
+
+  uname=`uname`
+
+  if lsb_release == nil
+    case uname
+       when /Darwin/
+          :mac
+    end
+  else
+    case lsb_release
+      when /Arch/
+        :arch
+      when /Debian|Kali/
+        :deb
+      when /Ubuntu/
+        :ubuntu
+      when /CentOS|RedHat/
+        :rpm
+    end
+  end
+
 end
 
 def repo_update(distrib)
@@ -101,6 +149,7 @@ def repo_update(distrib)
     sh 'sudo pacman -Syu --noconfirm'
   when :rpm
     sh 'sudo yum update'
+  when :mac
   end
 end
 
@@ -112,6 +161,8 @@ def install_package(distrib, package)
              'sudo pacman -S --noconfirm'
            when :rpm
              'sudo yum install -y'
+           when :mac
+             'brew install'
            end
 
   package = 
@@ -125,19 +176,11 @@ def install_package(distrib, package)
         'gvim'
       when :rpm
         'vim-X11'
+      when :mac
+        'vim && brew install macvim'
       else
         'gvim'
       end 
-
-    when 'the_silver_searcher'
-      case distrib
-      when :deb, :ubuntu
-        'silversearcher-ag'
-      when :arch
-        'the_silver_searcher'
-      else
-        'the_silver_searcher'
-      end
 
     when 'ctags'
       case distrib
@@ -156,28 +199,38 @@ def install_package(distrib, package)
 end
 
 def install_neovim(distrib)
-  # https://github.com/neovim/neovim/wiki/Installing-Neovim
-  install_package(distrib, 'python-dev python-pip python3-dev python3-pip')
-
   command = case distrib
     when :deb
+      # https://github.com/neovim/neovim/wiki/Installing-Neovim
+      install_package(distrib, 'python-dev python-pip python3-dev python3-pip')
+
       'sudo apt-get install -y neovim'
+      sh 'pip install neovim --user'
+      sh 'pip3 install neovim --user'
     when :ubuntu
+      install_package(distrib, 'python-dev python-pip python3-dev python3-pip')
       'sudo apt-get install -y software-properties-common \
         && sudo add-apt-repository -y ppa:neovim-ppa/stable \
         && sudo apt-get update \
         && sudo apt-get install -y neovim'
+      sh 'pip install neovim --user'
+      sh 'pip3 install neovim --user'
     when :arch
       'sudo pacman -S --noconfirm neovim'
+      sh 'pip install neovim --user'
+      sh 'pip3 install neovim --user'
     when :rpm
+      install_package(distrib, 'python-dev python-pip python3-dev python3-pip')
       'sudo yum -y install epel-release \
         && sudo curl -o /etc/yum.repos.d/dperson-neovim-epel-7.repo https://copr.fedorainfracloud.org/coprs/dperson/neovim/repo/epel-7/dperson-neovim-epel-7.repo \
         && yum -y install neovim'
+      sh 'pip install neovim --user'
+      sh 'pip3 install neovim --user'
+    when :mac
+      'brew install neovim'
   end
 
   sh command
-  sh 'pip install neovim --user'
-  sh 'pip3 install neovim --user'
 end
 
 namespace :install do
@@ -201,7 +254,7 @@ namespace :install do
     install_package(distrib, 'git')
   end
 
-  desc 'Install vim-gtk'
+  desc 'Install vim'
   task :vim do
     step 'vim'
     install_package(distrib, 'vim')
@@ -231,12 +284,6 @@ namespace :install do
     install_package(distrib, 'ctags')
   end
 
-  desc 'Install The Silver Searcher'
-  task :the_silver_searcher do
-    step 'the_silver_searcher'
-    install_package(distrib, 'the_silver_searcher')
-  end
-
   desc 'Install Plug'
   task :plug do
     step 'plug'
@@ -262,17 +309,22 @@ LINKED_FILES = filemap(
   'nvimrc.plugs'  => '~/.nvimrc.plugs'
 )
 
+distrib = get_distributor
+
 desc 'Install these config files.'
 task :install do
-  Rake::Task['install:update'].invoke
+  print distrib
+  if distrib != :mac
+    Rake::Task['install:update'].invoke
+    Rake::Task['install:curl'].invoke
+    Rake::Task['install:xclip'].invoke
+  end
+
   Rake::Task['install:vim'].invoke
-  Rake::Task['install:curl'].invoke
   Rake::Task['install:git'].invoke
   Rake::Task['install:neovim'].invoke
   Rake::Task['install:tmux'].invoke
-  Rake::Task['install:xclip'].invoke
   Rake::Task['install:ctags'].invoke
-  Rake::Task['install:the_silver_searcher'].invoke
 
   step 'symlink'
 
