@@ -291,6 +291,12 @@ namespace :install do
     sh 'nvim -c "PlugInstall" -c "q" -c "q"'
   end
 
+  desc 'Install fzf'
+  task :fzf do
+    step 'fzf'
+    install_package(distrib, 'fzf')
+  end
+
 end
 
 def filemap(map)
