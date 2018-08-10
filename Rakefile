@@ -319,7 +319,6 @@ distrib = get_distributor
 
 desc 'Install these config files.'
 task :install do
-  print distrib
   if distrib != :mac
     Rake::Task['install:update'].invoke
     Rake::Task['install:curl'].invoke
@@ -331,6 +330,7 @@ task :install do
   Rake::Task['install:neovim'].invoke
   Rake::Task['install:tmux'].invoke
   Rake::Task['install:ctags'].invoke
+  Rake::Task['install:gpg'].invoke
 
   step 'symlink'
 
