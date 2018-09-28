@@ -13,7 +13,7 @@ set autoindent
 set autoread                                                 " reload files when changed on disk, i.e. via `git checkout`
 set backspace=2                                              " Fix broken backspace in some setups
 set backupcopy=yes
-set clipboard=unnamed                                    " yank and paste with the system clipboard
+set clipboard^=unnamed,unnamedplus                                    " yank and paste with the system clipboard
 set directory-=.                                             " don't store swapfiles in the current directory
 set encoding=utf-8
 set expandtab                                                " expand tabs to spaces
@@ -46,8 +46,15 @@ silent! colorscheme seoul256
 
 filetype plugin indent on
 
-" gvim settings
-set guifont=Monospace\ 11
+" gui settings
+if has("mac")
+    set guifont=Monaco:h14
+elseif has("win32")
+    set guifont=Consolas:h12
+elseif has("unix")
+    set guifont=Monospace\ 11
+endif
+
 set guioptions-=m
 set guioptions-=T
 
