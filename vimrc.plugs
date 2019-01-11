@@ -30,6 +30,7 @@ Plug 'flazz/vim-colorschemes'
 " -----------------
 Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries', 'for': 'go' }
+Plug 'vim-erlang/vim-erlang-runtime', { 'for': 'erlang' }
 
 " Snippets
 " --------
