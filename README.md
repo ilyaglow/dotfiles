@@ -79,3 +79,14 @@ Jump to next/previous change
 [c
 ]c
 ```
+
+Stage/unstage hunk
+```
+,hs
+,hu
+```
+
+Preview hunk
+```
+,hp
+```
