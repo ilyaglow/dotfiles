@@ -233,6 +233,10 @@ def install_neovim(distrib)
   sh command
 end
 
+def pip3_install(package)
+  sh 'pip3 install ' + package
+end
+
 namespace :install do
   distrib = get_distributor
 
@@ -295,6 +299,12 @@ namespace :install do
   task :fzf do
     step 'fzf'
     install_package(distrib, 'fzf')
+  end
+
+  desc 'Install sqlparse'
+  task :sqlparse do
+    step 'sqlparse'
+    pip3_install('sqlparse')
   end
 
 end
