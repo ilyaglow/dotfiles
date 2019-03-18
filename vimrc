@@ -122,3 +122,7 @@ cnoremap w!! %!sudo tee > /dev/null %
 
 " format sql line
 nnoremap <leader>q :%!sqlformat --reindent --keywords upper --identifiers lower -<CR>
+
+" markdown preview
+let g:previm_open_cmd = 'open -a Google\ Chrome'
+let g:previm_enable_realtime = 1
