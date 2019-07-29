@@ -26,6 +26,10 @@ Plug 'junegunn/limelight.vim'
 Plug 'junegunn/seoul256.vim'
 Plug 'flazz/vim-colorschemes'
 
+" Preview
+" -------
+Plug 'previm/previm'
+
 " Language specific
 " -----------------
 Plug 'davidhalter/jedi-vim', { 'for': 'python' }
