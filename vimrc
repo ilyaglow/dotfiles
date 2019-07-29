@@ -66,7 +66,27 @@ let g:NERDSpaceDelims=1
 let g:gitgutter_enabled = 1
 let g:gitgutter_grep = 'grep'
 let g:go_fmt_command = "goimports"
-let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
+let g:go_metalinter_enabled = [
+    \'deadcode',
+    \'errcheck',
+    \'golint',
+    \'gosimple',
+    \'goconst',
+    \'dupl',
+    \'unconvert',
+    \'interfacer',
+    \'maligned',
+    \'misspell',
+    \'prealloc',
+    \'gocritic',
+    \'ineffassign',
+    \'staticcheck',
+    \'structcheck',
+    \'unused',
+    \'varcheck',
+    \'vet',
+    \]
+let g:go_metalinter_command = "golangci-lint"
 let g:go_metalinter_autosave = 1
 
 " fdoc is yaml
