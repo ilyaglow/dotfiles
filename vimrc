@@ -138,7 +138,7 @@ map <C-m> :cprevious<CR>
 nnoremap <leader>a :cclose<CR>
 
 " in case you forgot to sudo
-cnoremap w!! %!sudo tee > /dev/null %
+cnoremap w!! %!sudo tee > /dev/null "%"
 
 " format sql line
 nnoremap <leader>q :%!sqlformat --reindent --keywords upper --identifiers lower -<CR>
