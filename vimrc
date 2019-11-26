@@ -120,6 +120,9 @@ nnoremap <leader><space> :call whitespace#strip_trailing()<CR>
 nnoremap <leader>g :GitGutterToggle<CR>
 nnoremap <leader>. :cd %:p:h<CR>:pwd<CR>
 
+vnoremap <leader>en :!python -c 'import sys,urllib;print urllib.quote(sys.stdin.read().strip())'<cr>
+vnoremap <leader>de :!python -c 'import sys,urllib;print urllib.unquote(sys.stdin.read().strip())'<cr>
+"
 " vim-go specific
 nnoremap <leader>c :GoDoc<CR>
 nnoremap <leader>G :Goyo<CR>
