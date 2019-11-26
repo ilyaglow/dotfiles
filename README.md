@@ -90,3 +90,10 @@ Preview hunk
 ```
 ,hp
 ```
+
+### jedi-vim
+
+Go to definition:
+```
+,d
+```
