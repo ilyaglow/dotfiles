@@ -87,7 +87,6 @@ let g:go_metalinter_enabled = [
     \'vet',
     \]
 let g:go_metalinter_command = "golangci-lint"
-let g:go_metalinter_autosave = 1
 
 " fdoc is yaml
 autocmd BufRead,BufNewFile *.fdoc set filetype=yaml
@@ -120,8 +119,8 @@ nnoremap <leader><space> :call whitespace#strip_trailing()<CR>
 nnoremap <leader>g :GitGutterToggle<CR>
 nnoremap <leader>. :cd %:p:h<CR>:pwd<CR>
 
-vnoremap <leader>en :!python -c 'import sys,urllib;print urllib.quote(sys.stdin.read().strip())'<cr>
-vnoremap <leader>de :!python -c 'import sys,urllib;print urllib.unquote(sys.stdin.read().strip())'<cr>
+vnoremap <leader>en :!python -c 'import sys,urllib.parse;print(urllib.parse.quote(sys.stdin.read().strip()))'<CR>
+vnoremap <leader>de :!python -c 'import sys,urllib.parse;print(urllib.parse.unquote(sys.stdin.read().strip()))'<CR>
 "
 " vim-go specific
 nnoremap <leader>c :GoDoc<CR>
@@ -129,11 +128,12 @@ nnoremap <leader>G :Goyo<CR>
 autocmd FileType go nmap <silent> <Leader>d <Plug>(go-def-tab)
 autocmd FileType go nmap <leader>b  <Plug>(go-build)
 
-nnoremap <leader>J :%!python -c "import json, sys, collections; print json.dumps(json.load(sys.stdin, object_pairs_hook=collections.OrderedDict), indent=4)"<CR>
+nnoremap <leader>J :%!python -c "import json,sys,collections;print(json.dumps(json.load(sys.stdin,object_pairs_hook=collections.OrderedDict),indent=4))"<CR>
 autocmd! User GoyoEnter Limelight
 autocmd! User GoyoLeave Limelight!
 noremap <silent> <leader>V :source ~/.vimrc<CR>:filetype detect<CR>:exe ":echo 'vimrc reloaded'"<CR>
 inoremap jj <ESC>
+inoremap kk <ESC>
 
 " vim-go shortcuts
 map <C-n> :cnext<CR>
@@ -149,3 +149,6 @@ nnoremap <leader>q :%!sqlformat --reindent --keywords upper --identifiers lower 
 " markdown preview
 let g:previm_open_cmd = 'open -a Google\ Chrome'
 let g:previm_enable_realtime = 1
+
+" always set working directory to the current file's directory
+autocmd BufEnter * lcd %:p:h
