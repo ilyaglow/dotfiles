@@ -177,7 +177,7 @@ def install_package(distrib, package)
       when :rpm
         'vim-X11'
       when :mac
-        'vim && brew install macvim'
+        'vim'
       else
         'gvim'
       end 
@@ -307,6 +307,17 @@ namespace :install do
     pip3_install('sqlparse')
   end
 
+  desc 'Install gpg'
+  task :gpg do
+    step 'gpg'
+    install_package(distrib, 'gnupg2')
+  end
+
+  desc 'Install gopass'
+  task :gopass do
+    step 'gopass'
+    install_package(distrib, 'gopass')
+  end
 end
 
 def filemap(map)
@@ -341,6 +352,7 @@ task :install do
   Rake::Task['install:tmux'].invoke
   Rake::Task['install:ctags'].invoke
   Rake::Task['install:gpg'].invoke
+  Rake::Task['install:gopass'].invoke
 
   step 'symlink'
 
