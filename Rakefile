@@ -307,15 +307,11 @@ namespace :install do
     pip3_install('sqlparse')
   end
 
-  desc 'Install gpg'
-  task :gpg do
-    step 'gpg'
-    install_package(distrib, 'gnupg2')
-  end
-
   desc 'Install gopass'
   task :gopass do
     step 'gopass'
+    install_package(distrib, 'gnupg2')
+    install_package(distrib, 'pinentry-mac')
     install_package(distrib, 'gopass')
   end
 end
@@ -351,7 +347,6 @@ task :install do
   Rake::Task['install:neovim'].invoke
   Rake::Task['install:tmux'].invoke
   Rake::Task['install:ctags'].invoke
-  Rake::Task['install:gpg'].invoke
   Rake::Task['install:gopass'].invoke
 
   step 'symlink'
