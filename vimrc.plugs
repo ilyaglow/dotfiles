@@ -21,7 +21,6 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 " Writing
 " -------
 Plug 'dhruvasagar/vim-table-mode'
-Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
 Plug 'junegunn/seoul256.vim'
 Plug 'flazz/vim-colorschemes'
@@ -34,20 +33,6 @@ Plug 'previm/previm'
 " -----------------
 Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries', 'for': 'go' }
-Plug 'vim-erlang/vim-erlang-runtime', { 'for': 'erlang' }
-
-" Snippets
-" --------
-Plug 'SirVer/ultisnips'
-
-if executable("curl")
-
-    " Webapi: Dependency of Gist-vim
-    Plug 'mattn/webapi-vim'
-
-    " Gist: Post text to gist.github
-    Plug 'mattn/gist-vim'
-endif
 
 filetype plugin indent on                   " required!
 call plug#end()
