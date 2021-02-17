@@ -198,41 +198,6 @@ def install_package(distrib, package)
   sh command
 end
 
-def install_neovim(distrib)
-  command = case distrib
-    when :deb
-      # https://github.com/neovim/neovim/wiki/Installing-Neovim
-      install_package(distrib, 'python-dev python-pip python3-dev python3-pip')
-
-      'sudo apt-get install -y neovim'
-      sh 'pip install neovim --user'
-      sh 'pip3 install neovim --user'
-    when :ubuntu
-      install_package(distrib, 'python-dev python-pip python3-dev python3-pip')
-      'sudo apt-get install -y software-properties-common \
-        && sudo add-apt-repository -y ppa:neovim-ppa/stable \
-        && sudo apt-get update \
-        && sudo apt-get install -y neovim'
-      sh 'pip install neovim --user'
-      sh 'pip3 install neovim --user'
-    when :arch
-      'sudo pacman -S --noconfirm neovim'
-      sh 'pip install neovim --user'
-      sh 'pip3 install neovim --user'
-    when :rpm
-      install_package(distrib, 'python-dev python-pip python3-dev python3-pip')
-      'sudo yum -y install epel-release \
-        && sudo curl -o /etc/yum.repos.d/dperson-neovim-epel-7.repo https://copr.fedorainfracloud.org/coprs/dperson/neovim/repo/epel-7/dperson-neovim-epel-7.repo \
-        && yum -y install neovim'
-      sh 'pip install neovim --user'
-      sh 'pip3 install neovim --user'
-    when :mac
-      'brew install neovim'
-  end
-
-  sh command
-end
-
 def pip3_install(package)
   sh 'pip3 install ' + package
 end
@@ -264,12 +229,6 @@ namespace :install do
     install_package(distrib, 'vim')
   end
 
-  desc 'Install neovim'
-  task :neovim do
-    step 'neovim'
-    install_neovim(distrib)
-  end
-
   desc 'Install tmux'
   task :tmux do
     step 'tmux'
@@ -292,7 +251,6 @@ namespace :install do
   task :plug do
     step 'plug'
     sh 'vim -c "PlugInstall" -c "q" -c "q"'
-    sh 'nvim -c "PlugInstall" -c "q" -c "q"'
   end
 
   desc 'Install fzf'
@@ -328,8 +286,6 @@ LINKED_FILES = filemap(
   'tmux.conf'     => '~/.tmux.conf',
   'vimrc'         => '~/.vimrc',
   'vimrc.plugs'   => '~/.vimrc.plugs',
-  'nvimrc'        => '~/.config/nvim/init.vim',
-  'nvimrc.plugs'  => '~/.nvimrc.plugs'
 )
 
 distrib = get_distributor
@@ -344,7 +300,6 @@ task :install do
 
   Rake::Task['install:vim'].invoke
   Rake::Task['install:git'].invoke
-  Rake::Task['install:neovim'].invoke
   Rake::Task['install:tmux'].invoke
   Rake::Task['install:ctags'].invoke
   Rake::Task['install:gopass'].invoke
